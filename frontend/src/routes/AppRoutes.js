@@ -1,6 +1,5 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-
 import HomePage from "../pages/HomePage";
 import ExploreCourses from "../pages/ExploreCourses";
 import CourseView from "../pages/CourseView";
@@ -9,11 +8,9 @@ import CreateCourse from "../pages/CreateCourse";
 import CertificatesPage from "../pages/CertificatesPage";
 import ProfilePage from "../pages/ProfilePage";
 import QuizPage from "../pages/QuizPage";
-
 import LoginForm from "../components/auth/LoginForm";
-import RegisterForm from "../components/auth/RegisterForm"; // we’ll build inside temp.js if you want
+import RegisterForm from "../components/auth/RegisterForm"; 
 import ForgotPassword from "../components/auth/ForgotPassword";
-
 import ProtectedRoute from "./ProtectedRoute";
 import Head from "../components/common/head";
 import Foot from "../components/common/foot";
@@ -22,20 +19,14 @@ function AppRoutes({ theme, toggleTheme }) {
   return (
     <>
       <Head theme={theme} toggleTheme={toggleTheme} />
-
       <main className="main-content">
         <Routes>
-          {/* Public pages */}
           <Route path="/" element={<HomePage />} />
           <Route path="/explore" element={<ExploreCourses />} />
           <Route path="/course/:id" element={<CourseView />} />
-
-          {/* Auth pages */}
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/forget-pass" element={<ForgotPassword />} />
-
-          {/* Protected pages */}
           <Route
             path="/my-courses"
             element={
@@ -44,7 +35,6 @@ function AppRoutes({ theme, toggleTheme }) {
               </ProtectedRoute>
             }
           />
-
           <Route
             path="/create-course"
             element={
@@ -53,7 +43,6 @@ function AppRoutes({ theme, toggleTheme }) {
               </ProtectedRoute>
             }
           />
-
           <Route
             path="/quiz/:quizId"
             element={
@@ -62,7 +51,6 @@ function AppRoutes({ theme, toggleTheme }) {
               </ProtectedRoute>
             }
           />
-
           <Route
             path="/certificates"
             element={
@@ -71,7 +59,6 @@ function AppRoutes({ theme, toggleTheme }) {
               </ProtectedRoute>
             }
           />
-
           <Route
             path="/profile"
             element={
@@ -80,12 +67,9 @@ function AppRoutes({ theme, toggleTheme }) {
               </ProtectedRoute>
             }
           />
-
-          {/* 404 */}
           <Route path="*" element={<div className="fade-in">Page Not Found</div>} />
         </Routes>
       </main>
-
       <Foot />
     </>
   );

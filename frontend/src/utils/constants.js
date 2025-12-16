@@ -1,7 +1,4 @@
-// constants.js
-
 export const API_BASE_URL = "http://localhost:8000/api";  
-// Change later when connecting to Laravel backend
 
 export const CATEGORIES = [
   "Programming",

@@ -5,29 +5,24 @@ export default function QuizCreator({ onCreate }) {
   const [question, setQuestion] = useState("");
   const [options, setOptions] = useState(["", "", "", ""]);
   const [correct, setCorrect] = useState(0);
-
   function saveQuestion() {
     onCreate({
       text: question,
       options,
       correct,
     });
-
     setQuestion("");
     setOptions(["", "", "", ""]);
   }
-
   return (
     <div className="quiz-creator">
       <h3>Add Question</h3>
-
       <input
         type="text"
         placeholder="Question"
         value={question}
         onChange={(e) => setQuestion(e.target.value)}
       />
-
       {options.map((opt, i) => (
         <input
           key={i}
@@ -41,7 +36,6 @@ export default function QuizCreator({ onCreate }) {
           }}
         />
       ))}
-
       <select value={correct} onChange={(e) => setCorrect(e.target.value)}>
         {options.map((_, i) => (
           <option key={i} value={i}>
@@ -49,7 +43,6 @@ export default function QuizCreator({ onCreate }) {
           </option>
         ))}
       </select>
-
       <button onClick={saveQuestion}>Add</button>
     </div>
   );

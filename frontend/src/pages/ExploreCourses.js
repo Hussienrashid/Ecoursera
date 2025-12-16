@@ -12,7 +12,6 @@ export default function ExploreCourses() {
     location.state?.category || "All"
   );
 
-  // Mock courses (you can later replace with backend)
   useEffect(() => {
     setCourses([
       {

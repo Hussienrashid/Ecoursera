@@ -29,7 +29,6 @@ export default function LoginForm() {
             <label>Email Address</label>
             <input
               type="email"
-              placeholder="example@mail.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -39,7 +38,6 @@ export default function LoginForm() {
             <label>Password</label>
             <input
               type="password"
-              placeholder="•••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required

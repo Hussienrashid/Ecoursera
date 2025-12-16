@@ -9,29 +9,43 @@ export default function CourseView() {
   const [selectedLesson, setSelectedLesson] = useState(null);
 
   useEffect(() => {
-    // Mock course data
-    const mockCourse = {
+    const mockCourse1 = {
       id,
       title: "React for Beginners",
-      instructor: "John Smith",
+      instructor: "Hussein Rashid",
       description:
         "Learn the basics of React, components, hooks, and build your first SPA.",
       image: "https://source.unsplash.com/900x500/?react,programming",
     };
-    const mockLessons = [
+    const mockLessons1 = [
       { id: 1, title: "Introduction to React" },
       { id: 2, title: "JSX and Components" },
       { id: 3, title: "State and Props" },
       { id: 4, title: "Hooks Basics" },
     ];
-
-    setCourse(mockCourse);
-    setLessons(mockLessons);
-    setSelectedLesson(mockLessons[0]);
+    const mockCourse2 = {
+      id,
+      title: "Laravel for Beginners",
+      instructor: "Hussein Rashid",
+      description:
+        "Learn the basics of React, components, hooks, and build your first SPA.",
+      image: "https://source.unsplash.com/900x500/?react,programming",
+    };
+    const mockLessons2 = [
+      { id: 1, title: "Introduction to React" },
+      { id: 2, title: "JSX and Components" },
+      { id: 3, title: "State and Props" },
+      { id: 4, title: "Hooks Basics" },
+    ];
+    setCourse(mockCourse1);
+    setLessons(mockLessons1);
+    setCourse(mockCourse2);
+    setLessons(mockLessons2);
+    setSelectedLesson(mockLessons1[0]);
   }, [id]);
+  
 
   if (!course) return <div className="course-view-container">Loading...</div>;
-
   return (
     <div className="course-view-container">
       <div className="course-header">
@@ -43,7 +57,6 @@ export default function CourseView() {
           <button className="enroll-btn">Enroll Now</button>
         </div>
       </div>
-
       <h2 className="lessons-title">Lessons</h2>
       <div className="course-layout">
         <div className="lessons-list">
@@ -61,7 +74,6 @@ export default function CourseView() {
             </div>
           ))}
         </div>
-
         <div className="lesson-player">
           {selectedLesson ? (
             <>

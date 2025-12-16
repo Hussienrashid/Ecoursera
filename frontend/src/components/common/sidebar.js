@@ -16,7 +16,6 @@ export default function Sidebar() {
           >
             My Courses
           </NavLink>
-
           <NavLink
             to="/create-course"
             className={({ isActive }) =>
@@ -25,7 +24,6 @@ export default function Sidebar() {
           >
             Create Course
           </NavLink>
-
           <NavLink
             to="/certificates"
             className={({ isActive }) =>

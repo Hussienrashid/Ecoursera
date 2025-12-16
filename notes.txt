@@ -26,3 +26,16 @@ React Router (Navigation)
 Context API (Auth & Course State Management)
 
 Global State Injection
+
+Enable Laravel IDE Helper:->composer require --dev barryvdh/laravel-ide-helper
+
+generating key:php artisan key:generate
+
+DB:
+composer require doctrine/dbal
+composer require illuminate/database
+clear cache:php artisan optimize:clear
+install sanctum(for api auth):composer require laravel/sanctum
+php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+
+kernel.php|Handler.php|Authenticate.php must exist

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import QuestionItem from "./questionitem";
+import QuestionItem from "./QuestionItem";
 import "./quiztaker.css";
 
 export default function QuizTaker({ quiz }) {
