@@ -1,31 +1,31 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
+    // REGISTER
     public function register(Request $request)
     {
-        $data = $request->validate([
-            'name' => ['required','string','max:100'],
-            'email' => ['required','email','max:150','unique:users,email'],
-            'password' => ['required','string','min:6'],
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
         ]);
 
         $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
         ]);
 
-        // token auth (matches your axios Bearer token)
-        $token = $user->createToken('ecourse')->plainTextToken;
+        $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
             'user' => $user,
@@ -33,22 +33,26 @@ class AuthController extends Controller
         ], 201);
     }
 
+    // LOGIN
     public function login(Request $request)
     {
-        $data = $request->validate([
-            'email' => ['required','email'],
-            'password' => ['required','string'],
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
         ]);
 
-        $user = User::where('email', $data['email'])->first();
+        $user = User::where('email', $request->email)->first();
 
-        if (!$user || !Hash::check($data['password'], $user->password)) {
+        if (! $user || ! Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
-                'email' => ['Invalid credentials.'],
+                'email' => ['Invalid credentials'],
             ]);
         }
 
-        $token = $user->createToken('ecourse')->plainTextToken;
+        // delete old tokens (optional but clean)
+        $user->tokens()->delete();
+
+        $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
             'user' => $user,
@@ -56,20 +60,19 @@ class AuthController extends Controller
         ]);
     }
 
+    // CURRENT USER
     public function me(Request $request)
     {
-        return response()->json([
-            'user' => $request->user(),
-        ]);
+        return response()->json($request->user());
     }
 
+    // LOGOUT
     public function logout(Request $request)
     {
-        // revoke ONLY current token
-        $request->user()->currentAccessToken()?->delete();
+        $request->user()->currentAccessToken()->delete();
 
         return response()->json([
-            'message' => 'Logged out',
+            'message' => 'Logged out successfully',
         ]);
     }
 }
