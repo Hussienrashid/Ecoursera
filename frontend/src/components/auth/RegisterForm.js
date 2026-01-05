@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import { register as registerApi } from "../../api/auth";
 import "./RegisterForm.css";
 
 export default function RegisterForm() {
@@ -9,51 +10,59 @@ export default function RegisterForm() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { login } = useAuth();
-  function handleRegister(e) {
+
+  async function handleRegister(e) {
     e.preventDefault();
-    login({ name, email });
-    navigate("/");
+
+    try {
+      const res = await registerApi({
+        name,
+        email,
+        password,
+      });
+      localStorage.setItem("ecourse_token", res.token);
+      login(res.user);
+
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+      alert("Registration failed");
+    }
   }
+
   return (
     <div className="auth-wrapper">
       <div className="auth-card">
         <h1 className="auth-title">Create Account</h1>
-        <p className="auth-subtitle">Join eCourse and start learning!</p>
+
         <form onSubmit={handleRegister}>
-          <div className="auth-input-group">
-            <label>Full Name</label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </div>
-          <div className="auth-input-group">
-            <label>Email Address</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className="auth-input-group">
-            <label>Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <button className="auth-btn">Sign Up</button>
+          <input
+            type="text"
+            placeholder="Full Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button>Sign Up</button>
         </form>
-        <p className="auth-bottom-text">
-          Already have an account?{" "}
-          <Link to="/login" className="auth-link">
-            Login
-          </Link>
+        <p>
+          Already have an account? <Link to="/login">Login</Link>
         </p>
       </div>
     </div>

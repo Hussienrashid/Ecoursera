@@ -4,6 +4,7 @@ const axiosClient = axios.create({
   baseURL: "http://localhost:8000/api", 
   headers: {
     "Content-Type": "application/json",
+    "Accept": "application/json",
   },
 });
 
@@ -20,9 +21,13 @@ axiosClient.interceptors.request.use((config) => {
 axiosClient.interceptors.response.use(
   (response) => response.data,
   (error) => {
-    console.error("API ERROR:", error.response?.data || error.message);
+    if (error.response?.status === 401) {
+      localStorage.removeItem("ecourse_token");
+      window.location.href = "/login";
+    }
     throw error;
   }
 );
+
 
 export default axiosClient;
